@@ -1,8 +1,11 @@
 <?php
-$servername = "localhost";
-$username = "your_username";
-$password = "your_password";
-$dbname = "your_database";
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+
+ $servername = "localhost"; $username = "root";
+ $password = "root"; $dbname = "info";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -12,8 +15,9 @@ if ($conn->connect_error) {
 
 $name = $_POST['name'];
 $email = $_POST['email'];
+$number = $_POST['number'];
 
-$sql = "INSERT INTO users (name, email) VALUES ('$name', '$email')";
+$sql = "INSERT INTO users (name, email, number) VALUES ('$name', '$email', '$>
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
@@ -22,5 +26,5 @@ if ($conn->query($sql) === TRUE) {
 }
 
 $conn->close();
-header("Location: index.php"); // Redirect back to the homepage
+header("Location: index.php"); 
 ?>
