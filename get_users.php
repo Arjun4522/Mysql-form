@@ -1,8 +1,8 @@
 <?php
 $servername = "localhost";
-$username = "your_username";
-$password = "your_password";
-$dbname = "your_database";
+$username = "root";
+$password = "root";
+$dbname = "info";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -16,7 +16,7 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     echo "<ul>";
     while ($row = $result->fetch_assoc()) {
-        echo "<li>" . $row["name"] . " - " . $row["email"] . "</li>";
+        echo "<li>" . $row["name"] . " - " . $row["email"] . " - " . $row["number"] . "</li>";
     }
     echo "</ul>";
 } else {
