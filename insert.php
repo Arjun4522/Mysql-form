@@ -1,30 +1,69 @@
-<?php
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Insert Values</title>
+</head>
+<body>
+    <h1>Insert Values into <?php echo $_GET['table']; ?></h1>
+    <form action="" method="post">
+        <?php
+        // Database connection settings
+        $servername = "localhost";
+        $username = "root";
+        $password = "root";
+        $dbname = "test";
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+        // Create a database connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
 
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
 
- $servername = "localhost"; $username = "root";
- $password = "root"; $dbname = "info";
+        $tableName = $_GET['table'];
+        $sql = "DESCRIBE $tableName";
+        $result = $conn->query($sql);
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "<label for='{$row['Field']}'>{$row['Field']}:</label>";
+                echo "<input type='text' id='{$row['Field']}' name='values[{$row['Field']}]' required><br><br>";
+            }
+        } else {
+            echo "Table $tableName not found.";
+        }
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+        // Close the database connection
+        $conn->close();
+        ?>
 
-$name = $_POST['name'];
-$email = $_POST['email'];
-$number = $_POST['number'];
+        <input type="submit" value="Insert Values">
+    </form>
+        <br>
+    <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Reconnect to the database
+        $conn = new mysqli($servername, $username, $password, $dbname);
 
-$sql = "INSERT INTO users (name, email, number) VALUES ('$name', '$email', '$number')";
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
 
-if ($conn->query($sql) === TRUE) {
-    echo "New record created successfully";
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
-}
+        $insertValues = $_POST['values'];
+        $columns = implode(", ", array_keys($insertValues));
+        $values = "'" . implode("', '", $insertValues) . "'";
 
-$conn->close();
-header("Location: index.php"); 
-?>
+        $insertSql = "INSERT INTO $tableName ($columns) VALUES ($values)";
+        if ($conn->query($insertSql) === TRUE) {
+            echo "Values inserted into $tableName successfully.";
+        } else {
+            echo "Error inserting values into $tableName: " . $conn->error;
+        }
+
+        // Close the database connection
+        $conn->close();
+    }
+    ?>
+</body>
+</html>
