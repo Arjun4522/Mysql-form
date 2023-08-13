@@ -1,0 +1,21 @@
+<html>
+<head>
+    <title>Create Table Form</title>
+</head>
+<body>
+    <h1>Create Table Form</h1>
+    <form action="create_tables.php" method="post">
+        <label for="tableName">Table Name:</label>
+        <input type="text" id="tableName" name="tableName" required><br><br>
+
+        <label for="numberOfColumns">Number of Columns:</label>
+        <input type="number" id="numberOfColumns" name="numberOfColumns" required><br><br>
+
+        <label for="columnNames">Column Names (comma-separated):</label>
+        <input type="text" id="columnNames" name="columnNames" required><br><br>
+
+        <input type="submit" value="Create Table">
+    </form>
+
+</body>
+</html>
