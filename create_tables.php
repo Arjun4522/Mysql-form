@@ -10,12 +10,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $numberOfColumns = intval($_POST['numberOfColumns']);
     $columnNamesString = $_POST['columnNames'];
 
-    // Convert the comma-separated string of column names into an array
+   
     $columnNamesArray = array_map('trim', explode(',', $columnNamesString));
 
-    // Rest of your code for creating the table
 
-    // Now you can use the $columnNamesArray to iterate through column names
    // for ($i = 0; $i < $numberOfColumns; $i++) {
        // $columnName = $columnNamesArray[$i];
         // Use $columnName as needed
